@@ -1,0 +1,151 @@
+<% layout('layouts/boilerplate') %>
+
+<style>
+/* ================= PROFILE CARD ================= */
+
+.profile-card {
+  border-radius: 20px;
+  transition: 0.3s ease;
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-theme .profile-card {
+  background: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- LIGHT MODE ---------- */
+body.light-theme {
+  background: #f3f4f6; /* soft gray background */
+}
+
+body.light-theme .profile-card {
+  background: #ffffff;
+  color: #1f2933;
+  border: 1px solid #e2e8f0; /* clearer border */
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* Divider line */
+body.light-theme hr {
+  border-color: #e5e7eb;
+}
+
+/* ---------- DARK MODE ---------- */
+body.dark-theme .profile-card {
+  background: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- LIGHT MODE ---------- */
+body.light-theme {
+  background: #f5f6f8;
+}
+
+body.light-theme .profile-card {
+  background: #ffffff;
+  color: #1f2933;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ================= EMAIL ================= */
+
+.profile-email {
+  font-size: 0.95rem;
+}
+
+body.dark-theme .profile-email {
+  color: #d1d5db;
+}
+
+body.light-theme .profile-email {
+  color: #555;
+}
+/* edit btn*/
+.profile-edit-btn {
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.3s ease;
+  display: inline-block;
+}
+
+/* Dark Mode */
+body.dark-theme .profile-edit-btn {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+body.dark-theme .profile-edit-btn:hover {
+  background: #ffffff;
+  color: #111;
+}
+
+/* Light Mode */
+body.light-theme .profile-edit-btn {
+  border: 1px solid #1f2933;
+  color: #1f2933;
+  background: transparent;
+}
+
+body.light-theme .profile-edit-btn:hover {
+  background: #1f2933;
+  color: #ffffff;
+}
+</style>
+
+<div class="container mt-5">
+
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+
+      <div class="card profile-card shadow-lg border-0 rounded-4 p-4">
+
+        <!-- Profile Header -->
+        <div class="text-center mb-4">
+          <div class="profile-avatar mb-3">
+            <i class="fa-solid fa-user fa-3x"></i>
+          </div>
+
+          <h3 class="fw-bold"><%= currUser.username %></h3>
+          <p class="profile-email"><%= currUser.email %></p>
+        </div>
+
+        <hr class="text-secondary">
+
+        <!-- Extra Info -->
+        <div class="mt-3">
+          <p><strong>WhatsApp:</strong> 
+            <%= currUser.whatsapp || "Not Added" %>
+          </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between mt-4">
+      <a href="/profile/edit" class="profile-edit-btn rounded-pill px-4">
+            ✏ Edit Profile
+          </a>
+
+          <% if (currUser.googleId && !currUser.hash) { %>
+  <a href="/set-password" class="btn btn-warning rounded-pill px-4">
+    🔐 Set Password
+  </a>
+<% } %>
+
+          <a href="/wishlist" class="btn btn-outline-warning rounded-pill px-4">
+            ❤️ View Wishlist
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

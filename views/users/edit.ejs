@@ -1,0 +1,48 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+
+      <div class="card bg-dark text-light shadow-lg border-0 rounded-4 p-4">
+
+        <h3 class="text-center mb-4">Edit Profile</h3>
+
+        <form action="/profile?_method=PUT" method="POST">
+
+          <div class="mb-3">
+            <label>Username</label>
+            <input type="text" name="username"
+              value="<%= currUser.username %>"
+              class="form-control bg-secondary text-light border-0"
+              required>
+          </div>
+
+          <div class="mb-3">
+            <label>Email</label>
+            <input type="email" name="email"
+              value="<%= currUser.email %>"
+              class="form-control bg-secondary text-light border-0"
+              required>
+          </div>
+
+          <div class="mb-3">
+            <label>WhatsApp</label>
+            <input type="text" name="whatsapp"
+              value="<%= currUser.whatsapp || '' %>"
+              class="form-control bg-secondary text-light border-0">
+          </div>
+
+          <div class="d-grid mt-4">
+            <button class="btn btn-success rounded-pill">
+              Update Profile
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>

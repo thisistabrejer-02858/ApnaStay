@@ -1,0 +1,54 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-5">
+  <div class="col-lg-4 col-md-6 col-sm-10 offset-lg-4 offset-md-3 offset-sm-1">
+
+    <div class="card shadow-sm p-4">
+      <h2 class="text-center mb-4">Login</h2>
+
+      <!-- Google Login -->
+      <a href="/auth/google" class="btn btn-danger w-100 mb-3">
+        <i class="fa-brands fa-google me-2"></i>
+        Continue with Google
+      </a>
+
+      <!-- Divider -->
+      <div class="text-center mb-3">
+        <hr>
+        <span class="text-muted">OR</span>
+      </div>
+
+      <!-- Local Login Form -->
+      <form action="/login" method="POST" class="needs-validation" novalidate>
+
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            name="username"
+            id="username"
+            type="text"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            name="password"
+            id="password"
+            type="password"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          Login
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+</div>

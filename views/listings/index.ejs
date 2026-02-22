@@ -1,0 +1,259 @@
+<% layout('layouts/boilerplate') -%>
+  
+<style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  /* .filter p{
+    font-size: 0.8rem;
+  } */
+
+   .tax-info{
+    display: none;
+   }
+   .tax-toggle{
+    border: 1px solid black;
+    padding: 1rem;
+    /* height: 2.5rem; */
+    border-radius: 1rem;
+    margin-left: 5rem;
+    margin-top: 2rem;
+   }
+   .listing-card {
+  background-color: #1c1c1c;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.listing-card .card-body {
+  background-color: #1c1c1c;
+}
+
+.listing-link {
+  text-decoration: none;
+}
+
+.wishlist-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: white;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.wishlist-btn i {
+  color: #ff385c;
+  font-size: 18px;
+}
+</style>
+
+       <div id="filters">
+ 
+  <div class="filter" data-category="Trending">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>Trending</p>
+  </div>
+
+  <div class="filter" data-category="Rooms">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+  </div>
+
+  <div class="filter" data-category="Iconic Cities">
+    <div><i class="fa-solid fa-mountain-city"></i></div>
+    <p>Iconic Cities</p>
+  </div>
+
+  <div class="filter" data-category="Amazing Pools">
+    <div><i class="fa-solid fa-person-swimming"></i></div>
+    <p>Amazing Pools</p>
+  </div>
+
+  <div class="filter" data-category="Farms">
+    <div><i class="fa-solid fa-cow"></i></div>
+    <p>Farms</p>
+  </div>
+
+  <div class="filter" data-category="Arctic">
+    <div><i class="fa-solid fa-snowflake"></i></div>
+    <p>Arctic</p>
+  </div>
+
+  <div class="filter" data-category="Camping">
+    <div><i class="fa-solid fa-campground"></i></div>
+    <p>Camping</p>
+  </div>
+
+  <div class="filter" data-category="Domes">
+    <div><i class="fa-solid fa-igloo"></i></div>
+    <p>Domes</p>
+  </div>
+
+  <div class="filter" data-category="Boats">
+    <div><i class="fa-solid fa-ship"></i></div>
+    <p>Boats</p>
+  </div>
+
+  <div class="filter" data-category="Castle">
+    <div><i class="fa-brands fa-fort-awesome"></i></div>
+    <p>Castle</p>
+  </div>
+
+
+  <div class="tax-toggle ms-auto">
+    <div class="form-check-reverse form-switch">
+  <input class="form-check-input" 
+  type="checkbox"
+   role="switch"
+    id="switchCheckDefault">
+  <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+</div>
+  </div>
+
+</div>
+
+
+   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+  <% for(let listing of allListings) { %>
+
+  <div class="col">
+    <div class="card listing-card position-relative bg-dark text-light border-0">
+
+      <% 
+        let imageUrl = listing.images.url;
+       let isWishlisted = false;
+
+if (wishlist) {
+  isWishlisted = wishlist.some(
+    item => item.toString() === listing._id.toString()
+  );
+}
+      %>
+
+      <!-- ❤️ Wishlist Button -->
+      <% if(currUser) { %>
+      <button 
+      type="button"
+  class="wishlist-btn" 
+  data-id="<%= listing._id %>"
+  >
+
+  <i class="<%= isWishlisted ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+
+</button>
+      <% } %>
+
+      <!-- Image Click Only -->
+      <a href="/listings/<%= listing._id %>" class="listing-link">
+        <img
+          src="<%= imageUrl %>"
+          class="card-img-top"
+          alt="listing_image"
+          style="height:20rem; object-fit:cover;"
+        />
+      </a>
+
+      <!-- TEXT OUTSIDE LINK -->
+      <div class="card-body">
+        <h5 class="card-title text-white"><%= listing.title %></h5>
+        <p class="card-text text-light">
+          ₹<%= listing.price.toLocaleString("en-IN") %>/night
+          <i class="tax-info">&nbsp;&nbsp;+18% GST</i><br/>
+          <%= listing.country %>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <% } %>
+</div>
+ <script>
+  let taxswitch=document.getElementById("switchCheckDefault");
+  taxswitch.addEventListener("click",()=>{
+     let taxInfo=document.getElementsByClassName("tax-info");
+for(let i=0;i<taxInfo.length;i++){
+  if(taxInfo[i].style.display!=="inline"){
+    taxInfo[i].style.display="inline";
+  }
+  else{
+    taxInfo[i].style.display="none";
+  }
+}
+  })
+</script>
+<script>
+  // category filter
+  const filters = document.querySelectorAll(".filter");
+
+  filters.forEach(filter => {
+    filter.addEventListener("click", () => {
+      const category = filter.getAttribute("data-category");
+      window.location.href = `/listings?category=${encodeURIComponent(category)}`;
+    });
+  });
+</script>
+
+<script>
+document.querySelectorAll(".wishlist-btn").forEach(button => {
+
+  button.addEventListener("click", async (e) => {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const listingId = button.dataset.id;
+    const icon = button.querySelector("i");
+    const currentlyWishlisted = icon.classList.contains("fa-solid");
+
+    console.log("Clicked:", listingId);
+    console.log("Currently wishlisted:", currentlyWishlisted);
+
+    try {
+      const response = await fetch(`/wishlist/${listingId}`, {
+        method: currentlyWishlisted ? "DELETE" : "POST"
+      });
+
+      console.log("Response status:", response.status);
+
+      const data = await response.json();
+      console.log("Response data:", data);
+
+      if (data.success) {
+
+        if (currentlyWishlisted) {
+          icon.classList.remove("fa-solid");
+          icon.classList.add("fa-regular");
+        } else {
+          icon.classList.remove("fa-regular");
+          icon.classList.add("fa-solid");
+        }
+
+      }
+
+    } catch (err) {
+      console.log("ERROR:", err);
+    }
+
+  });
+
+});
+</script>

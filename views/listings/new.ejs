@@ -1,0 +1,179 @@
+<% layout('layouts/boilerplate') -%>
+
+<br /><br />
+
+<div class="row mt-3">
+  <div class="col-8 offset-2">
+
+    <h2>Create New Listing</h2>
+
+    <form 
+      action="/listings" 
+      method="POST" 
+      novalidate 
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
+
+      <!-- Title -->
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input 
+          type="text" 
+          name="listing[title]" 
+          class="form-control" 
+          required
+        />
+        <div class="valid-feedback">
+          Title looks good!
+        </div>
+      </div>
+
+      <!-- Image -->
+       <div class="mb-3">
+  <label for="imageInput" class="form-label">Upload Listing Image</label>
+  <input 
+    type="file" 
+    name="listing[images]" 
+    class="form-control"
+    id="imageInput"
+    required
+  />
+  <div class="invalid-feedback" id="fileError"></div>
+</div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea 
+          name="listing[description]" 
+          class="form-control" 
+          required
+        ></textarea>
+        <div class="invalid-feedback">
+          Description is required.
+        </div>
+      </div>
+      
+      <!-- Address -->
+      <div class="mb-3">
+  <label class="form-label">Full Address</label>
+  <input 
+    type="text" 
+    name="listing[address]" 
+    class="form-control"
+    placeholder="123 Main St, Springfield, IL 62704"
+    required
+  />
+</div>
+
+      <div class="row">
+
+        <!-- Price -->
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-label">Price</label>
+          <input 
+            type="text" 
+            name="listing[price]" 
+            class="form-control" 
+            required
+          />
+          <div class="invalid-feedback">
+            Price is required.
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3 col-md-8">
+          <label for="location" class="form-label">City</label>
+          <input 
+            type="text" 
+            name="listing[location]" 
+            class="form-control" 
+            required
+          />
+          <div class="invalid-feedback">
+            Location is required.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Country -->
+       <div class="row">
+        <div class="mb-3 col-md-6">
+        <label for="country" class="form-label">Country</label>
+        <input 
+          type="text" 
+          name="listing[country]" 
+          class="form-control" 
+          required
+        />
+        <div class="invalid-feedback">
+          Country is required.
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="mb-3 col-md-6">
+  <label class="form-label">Category</label>
+  <select name="listing[category]" class="form-select" required>
+    <option value="">Select Category</option>
+    <option value="Trending">Trending</option>
+    <option value="Rooms">Rooms</option>
+    <option value="Iconic Cities">Iconic Cities</option>
+    <option value="Amazing Pools">Amazing Pools</option>
+    <option value="Farms">Farms</option>
+    <option value="Arctic">Arctic</option>
+    <option value="Camping">Camping</option>
+    <option value="Domes">Domes</option>
+    <option value="Boats">Boats</option>
+    <option value="Castle">Castle</option>
+  </select>
+</div>
+       </div>
+      
+       
+       <div class="mb-3">
+  <label class="form-label">WhatsApp Number</label>
+  <input 
+    type="text"
+    name="listing[whatsapp]"
+    class="form-control"
+    placeholder="e.g. 919876543210"
+    required
+  />
+  <small class="text-muted">
+    Enter number with country code. Example: 91XXXXXXXXXX
+  </small>
+</div>
+
+      <!-- Submit Button -->
+      <button class="btn btn-dark mt-3">
+        Create Listing
+      </button>
+
+    </form>
+
+  </div>
+</div>
+<br /><br />
+<script>
+  const imageInput = document.getElementById("imageInput");
+  const fileError = document.getElementById("fileError");
+
+  const maxSize = 2 * 1024 * 1024;
+
+  imageInput.addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (file && file.size > maxSize) {
+      fileError.textContent = "File must be less than 2MB!";
+      imageInput.classList.add("is-invalid");
+      this.value = "";
+    } else {
+      fileError.textContent = "";
+      imageInput.classList.remove("is-invalid");
+    }
+  });
+</script>

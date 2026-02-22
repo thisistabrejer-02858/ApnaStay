@@ -1,0 +1,130 @@
+  <% layout('layouts/boilerplate') -%>
+<div class="row mt-3">
+    <div class="col-8 offset-3">
+    <h2><%= listing.title %> </h2>
+    </div>
+    <div class="card col-6 offset-3 show-card listing-card">
+  <img 
+  src="<%=listing.images.url%>" 
+  class="card-img-top show-img" 
+  alt="listing_image"
+  /> 
+  <div class="card-body">
+    <p class="card-text">Owned By:- <%= listing.owner.username%> </p>
+    <p class="card-text"><%= listing.description %></p>
+    <p class="text-text">Address:-</i><%= listing.address %></p>
+    <p class="card-text">&#8377; <%= listing.price.toLocaleString('en-IN')%>/night</p>
+    <p><strong>Category:</strong> <%= listing.category %></p>
+    <p class="card-text">City:-<%= listing.location %></p>
+    <p class="card-text"><%= listing.country %> </p>
+
+    <% if(currUser && currUser._id.toString() !== listing.owner._id.toString()) { %>
+  <a 
+   href="https://wa.me/<%= listing.whatsapp %>?text=<%= encodeURIComponent(`Hi 
+
+I came across your stay *${listing.title}* 
+
+ Location: ${listing.address}
+ Price: ₹${listing.price}/night
+
+It looks amazing!  
+I’m interested in booking. Could you please share availability and more details?
+
+Thank you!`) %>"
+    target="_blank"
+    class="btn btn-success mt-3"
+  >
+    <i class="fa-brands fa-whatsapp me-2"></i>
+    Book Stay
+  </a>
+<% } %>
+  </div>
+</div>
+    <br/>
+   <% if(currUser && listing.owner._id.equals(currUser._id)){%>
+
+    <div class="btns">
+        <a 
+        href="/listings/<%= listing._id %>/edit" 
+            class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
+
+    <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-dark offset-5">Delete</button>
+    </form>
+    </div>
+  <% } %>
+
+<div class="col-8 offset-3 mb-3">
+  <hr />
+  <% if(currUser){%>
+  <h4>Leave a Review</h4>
+
+  <form action="/listings/<%=listing.id%>/reviews" method="POST" novalidate class="needs-validation">
+    <div class="mb-3 mt-3">
+      <label for="rating" class="form-label">Rating</label>
+
+    </div>
+   <fieldset class="starability-slot">
+  <legend>Rating:</legend>
+
+  <input type="radio" id="rate1" name="review[rating]" value="1" />
+  <label for="rate1" title="Terrible">1 star</label>
+
+  <input type="radio" id="rate2" name="review[rating]" value="2" />
+  <label for="rate2" title="Not good">2 stars</label>
+
+  <input type="radio" id="rate3" name="review[rating]" value="3" />
+  <label for="rate3" title="Average">3 stars</label>
+
+  <input type="radio" id="rate4" name="review[rating]" value="4" />
+  <label for="rate4" title="Very good">4 stars</label>
+
+  <input type="radio" id="rate5" name="review[rating]" value="5" />
+  <label for="rate5" title="Amazing">5 stars</label>
+</fieldset>
+
+
+    <div class="mb-3 mt-3">
+      <label for="comment" class="form-label">Comments</label>
+      <textarea
+        name="review[comment]"
+        id="comment"
+        cols="30"
+        rows="5"
+        class="form-control"
+        required
+      ></textarea>
+      <div class="invalid-feedback">Please add some comments for review</div>
+    </div>
+    <button type="submit" class="btn btn-dark">Submit</button>
+  </form>
+    <hr/>
+   <%}%>
+
+  <p><b>All Reviews</b></p>
+  <div class="row">
+   <%for(review of listing.reviews){%>
+ <div class="card col-6 review-card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">@<%= review.author.username %></h5>
+    <p class="card-text">
+  <% for(let i = 1; i <= 5; i++) { %>
+    <% if(i <= review.rating) { %>
+      <span style="color: #ffc107; font-size: 2.5rem;">★</span>
+    <% } else { %>
+      <span style="color: #ccc; font-size: 2.5rem;">★</span>
+    <% } %>
+  <% } %>
+</p>
+
+    <p class="card-text"><%= review.comment %></p>
+      
+    </div>
+    <form mb-3 action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+      <button type="submit" class="btn btn-sm btn-dark">Delete</button>
+    </form>  
+</div>
+ <% }%>
+ </div>
+</div>
+</div>

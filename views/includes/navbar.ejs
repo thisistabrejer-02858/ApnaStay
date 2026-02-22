@@ -1,0 +1,77 @@
+<nav class="navbar navbar-expand-lg border-bottom sticky-top">
+  <div class="container-fluid">
+
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" href="/listings">
+      <i class="fa-regular fa-compass me-2"></i>ApnaStay </a>&nbsp;
+            <a class="nav-link" href="/listings"><b>Home</b></a>
+    <!-- <a class=" nav-link" href="/listings"><b>Home</b></a> -->
+    
+ <!-- Search -->
+<form class="d-flex search-form" method="GET" action="/listings">
+
+  <select name="filter" class="form-select me-2" style="max-width:130px;">
+    <option value="location">Location</option>
+    <option value="country">Country</option>
+  </select>
+
+  <input 
+    class="form-control me-2 search-input"
+    type="search"
+    name="search"
+    placeholder="Search..."
+    required
+  />
+
+  <button class="btn search-btn" type="submit">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+
+</form>
+    <!-- Toggler -->
+    <button class="navbar-toggler ms-2" type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible -->
+    <div class="collapse navbar-collapse justify-content-end"
+      id="navbarContent">
+
+      <ul class="navbar-nav align-items-lg-center">
+
+        <!-- Theme -->
+        <li class="nav-item me-lg-3">
+          <button id="themeToggle"
+            class="btn btn-outline-secondary btn-sm">
+            🌙
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/listings/new">Add New Listing</a>
+        </li>
+
+        <% if(!currUser) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login"><b>Login</b></a>
+          </li>
+        <% } %>
+
+        <% if(currUser) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout"><b>Logout</b></a>
+          </li>
+        <% } %>
+        <% if(currUser) { %>
+  <a class="nav-link" href="/profile"><b>Profile</b></a>
+<% } %>
+
+      </ul>
+    </div>
+  </div>
+</nav>
