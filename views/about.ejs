@@ -1,0 +1,107 @@
+<% layout('layouts/boilerplate') %>
+
+<style>
+
+.about-card {
+  border-radius: 20px;
+  padding: 40px 30px;
+  transition: 0.3s ease;
+}
+
+/* DARK MODE */
+body.dark-theme .about-card {
+  background: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+/* LIGHT MODE */
+body.light-theme .about-card {
+  background: #ffffff;
+  color: #1f2933;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.dev-avatar {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #e63946;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transition: 0.3s ease;
+}
+
+.dev-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dev-avatar:hover {
+  transform: scale(1.05);
+}
+
+.dev-role {
+  opacity: 0.8;
+}
+
+.about-btn {
+  border-radius: 30px;
+  padding: 8px 22px;
+  transition: 0.3s ease;
+}
+
+.about-btn:hover {
+  transform: translateY(-3px);
+}
+</style>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+
+      <div class="card about-card text-center">
+
+        <div class="dev-avatar">
+  <img src="/images/tabrej.jpeg" alt="Tabrej Ansari">
+</div>
+
+        <h3 class="fw-bold">Tabrej Ansari</h3>
+        <p class="dev-role">
+          BTech Electronics & Communication Engineering <br>
+          Backend Developer | AI Integration Enthusiast
+        </p>
+
+        <hr>
+
+        <p>📧 thisistabre.er@gmail.com</p>
+
+        <div class="d-flex justify-content-center gap-3 mt-3 flex-wrap">
+
+          <a href="https://www.linkedin.com/in/tabrej-tabarak02858/"
+             target="_blank"
+             class="btn btn-outline-primary about-btn">
+             LinkedIn
+          </a>
+
+          <a href="https://github.com/"
+             target="_blank"
+             class="btn btn-outline-primary about-btn">
+             GitHub
+          </a>
+
+        </div>
+
+        <div class="mt-4 text">
+          © 2026 ApnaStay — Developed by Tabrej Ansari
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

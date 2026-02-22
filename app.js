@@ -21,6 +21,8 @@ const listingRouter=require('./routes/listing.js');
 const reviewRouter=require('./routes/review.js');
 const userRouter=require('./routes/user.js');
 const mongo_url=process.env.MONGO_URL;
+const staticRoutes = require("./routes/static");
+
 
 main()
 .then(()=>{
@@ -110,10 +112,12 @@ app.use((req,res,next)=>{
 
 
 //listings
+app.use("/", staticRoutes);
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/wishlist", wishlistRoutes);
 app.use("/",userRouter);
+
 
 app.get("/", (req, res) => {
   res.redirect("/listings");

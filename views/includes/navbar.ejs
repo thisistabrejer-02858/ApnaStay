@@ -28,12 +28,16 @@
   </button>
 
 </form>
-    <!-- Toggler -->
-    <button class="navbar-toggler ms-2" type="button"
+ 
+      
+       
+         <!-- Toggler -->
+    <button class="navbar-toggler ms-auto" type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarContent">
       <span class="navbar-toggler-icon"></span>
     </button>
+
 
     <!-- Collapsible -->
     <div class="collapse navbar-collapse justify-content-end"
@@ -42,16 +46,24 @@
       <ul class="navbar-nav align-items-lg-center">
 
         <!-- Theme -->
-        <li class="nav-item me-lg-3">
-          <button id="themeToggle"
+         <li class="nav-item">
+           <button id="themeToggle"
             class="btn btn-outline-secondary btn-sm">
             🌙
           </button>
         </li>
+         
 
         <li class="nav-item">
           <a class="nav-link" href="/listings/new">Add New Listing</a>
         </li>
+
+        
+    <li class="nav-item">
+      <a class="nav-link" href="/about">
+         About Developer
+      </a>
+    </li>
 
         <% if(!currUser) { %>
           <li class="nav-item">
@@ -62,14 +74,16 @@
           </li>
         <% } %>
 
-        <% if(currUser) { %>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout"><b>Logout</b></a>
-          </li>
-        <% } %>
-        <% if(currUser) { %>
-  <a class="nav-link" href="/profile"><b>Profile</b></a>
-<% } %>
+         <% if(currUser) { %>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/profile"><b>Profile</b></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/logout"><b>Logout</b></a>
+    </li>
+
+  <% } %>
 
       </ul>
     </div>

@@ -75,6 +75,31 @@ body.light-theme .profile-email {
   transition: 0.3s ease;
   display: inline-block;
 }
+/* ================= PROFILE BUTTON FIX ================= */
+
+.profile-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.profile-buttons a {
+  flex: 1 1 45%;
+  text-align: center;
+  min-width: 140px;
+}
+
+/* Mobile View */
+@media (max-width: 576px) {
+  .profile-buttons {
+    flex-direction: column;
+  }
+
+  .profile-buttons a {
+    width: 100%;
+  }
+}
 
 /* Dark Mode */
 body.dark-theme .profile-edit-btn {
@@ -103,7 +128,7 @@ body.light-theme .profile-edit-btn:hover {
 <div class="container mt-5">
 
   <div class="row justify-content-center">
-    <div class="col-lg-7">
+  <div class="col-12 col-md-8 col-lg-7">
 
       <div class="card profile-card shadow-lg border-0 rounded-4 p-4">
 
@@ -127,7 +152,7 @@ body.light-theme .profile-edit-btn:hover {
         </div>
 
         <!-- Buttons -->
-        <div class="d-flex justify-content-between mt-4">
+       <div class="profile-buttons mt-4">
       <a href="/profile/edit" class="profile-edit-btn rounded-pill px-4">
             ✏ Edit Profile
           </a>
