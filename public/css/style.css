@@ -355,3 +355,65 @@ body.dark .search-input{
 .btn-success:hover {
     background-color: #1ebe5d !important;
 }
+/*review*/
+
+@media (max-width: 576px) {
+
+  .review-card {
+    width: 100% !important;
+    padding: 18px !important;
+    border-radius: 15px;
+  }
+
+  .review-card h5,
+  .review-card h6 {
+    font-size: 1rem;
+    word-break: break-word;
+  }
+
+  .review-card .stars {
+    font-size: 1.2rem;
+  }
+
+  .review-card p {
+    font-size: 0.9rem;
+  }
+
+  .review-card .btn {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+}
+/* Star default */
+.star {
+  color: #ccc;
+  font-size: 2rem;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+/* Mobile fixes only */
+@media (max-width: 576px) {
+
+  .review-card {
+    border-radius: 15px;
+    padding: 15px;
+  }
+
+  .review-card .stars .star {
+    font-size: 1.4rem; /* smaller stars on phone */
+  }
+
+  .review-card .card-title {
+    font-size: 1rem;
+  }
+
+  .review-card .btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+}
