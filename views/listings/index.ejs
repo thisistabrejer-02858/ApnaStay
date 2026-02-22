@@ -1,72 +1,81 @@
 <% layout('layouts/boilerplate') -%>
-  
+
 <style>
-  #filters {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+/* Filters */
+#filters {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  scrollbar-width: none;
+}
+#filters::-webkit-scrollbar { display: none; }
 
-  .filter {
-    text-align: center;
-    margin-right: 2rem;
-    margin-top: 2rem;
-    opacity: 0.7;
-  }
+.filter {
+  flex: 0 0 auto;
+  text-align: center;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+.filter:hover { opacity: 1; cursor: pointer; }
 
-  .filter:hover {
-    opacity: 1;
-    cursor: pointer;
-  }
-  /* .filter p{
-    font-size: 0.8rem;
-  } */
+/* Tax */
+.tax-info { display: none; }
 
-   .tax-info{
-    display: none;
-   }
-   .tax-toggle{
-    border: 1px solid black;
-    padding: 1rem;
-    /* height: 2.5rem; */
-    border-radius: 1rem;
-    margin-left: 5rem;
-    margin-top: 2rem;
-   }
-   .listing-card {
-  background-color: #1c1c1c;
-  border-radius: 15px;
+/* Cards */
+.listing-card {
+  border-radius: 5px;
   overflow: hidden;
+  background: #1c1c1c;
 }
 
-.listing-card .card-body {
-  background-color: #1c1c1c;
+.listing-card img {
+  height: 220px;
+  object-fit: cover;
 }
 
-.listing-link {
-  text-decoration: none;
+@media (min-width: 768px) {
+  .listing-card img {
+    height: 260px;
+  }
 }
 
+.card-body {
+  padding: 0.9rem;
+}
+
+.card-title {
+  font-size: 1rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+/* Wishlist */
 .wishlist-btn {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 12px;
+  right: 12px;
   background: white;
   border: none;
-  padding: 8px;
+  padding: 7px;
   border-radius: 50%;
-  cursor: pointer;
-  transition: 0.3s ease;
 }
 
 .wishlist-btn i {
   color: #ff385c;
-  font-size: 18px;
+  font-size: 16px;
 }
+
+/* Prevent horizontal scroll */
+body { overflow-x: hidden; }
 </style>
 
-       <div id="filters">
- 
+<div class="container py-3">
+<!-- Filters -->
+<div id="filters">
+
   <div class="filter" data-category="Trending">
     <div><i class="fa-solid fa-fire"></i></div>
     <p>Trending</p>
@@ -117,143 +126,77 @@
     <p>Castle</p>
   </div>
 
-
-  <div class="tax-toggle ms-auto">
-    <div class="form-check-reverse form-switch">
-  <input class="form-check-input" 
-  type="checkbox"
-   role="switch"
-    id="switchCheckDefault">
-  <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
-</div>
-  </div>
-
 </div>
 
+  <!-- Listings -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+    <% for(let listing of allListings) { %>
 
-   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-  <% for(let listing of allListings) { %>
+    <div class="col">
+      <div class="card listing-card position-relative text-light border-0">
 
-  <div class="col">
-    <div class="card listing-card position-relative bg-dark text-light border-0">
+        <% 
+          let imageUrl = listing.images.url;
+          let isWishlisted = wishlist && wishlist.some(
+            item => item.toString() === listing._id.toString()
+          );
+        %>
 
-      <% 
-        let imageUrl = listing.images.url;
-       let isWishlisted = false;
+        <% if(currUser) { %>
+        <button type="button"
+          class="wishlist-btn"
+          data-id="<%= listing._id %>">
+          <i class="<%= isWishlisted ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
+        </button>
+        <% } %>
 
-if (wishlist) {
-  isWishlisted = wishlist.some(
-    item => item.toString() === listing._id.toString()
-  );
-}
-      %>
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+          <img src="<%= imageUrl %>" class="card-img-top" />
+        </a>
 
-      <!-- ❤️ Wishlist Button -->
-      <% if(currUser) { %>
-      <button 
-      type="button"
-  class="wishlist-btn" 
-  data-id="<%= listing._id %>"
-  >
+        <div class="card-body">
+          <h5 class="card-title"><%= listing.title %></h5>
+          <p class="card-text">
+            ₹<%= listing.price.toLocaleString("en-IN") %>/night <br>
+            <%= listing.country %>
+          </p>
+        </div>
 
-  <i class="<%= isWishlisted ? 'fa-solid' : 'fa-regular' %> fa-heart"></i>
-
-</button>
-      <% } %>
-
-      <!-- Image Click Only -->
-      <a href="/listings/<%= listing._id %>" class="listing-link">
-        <img
-          src="<%= imageUrl %>"
-          class="card-img-top"
-          alt="listing_image"
-          style="height:20rem; object-fit:cover;"
-        />
-      </a>
-
-      <!-- TEXT OUTSIDE LINK -->
-      <div class="card-body">
-        <h5 class="card-title text-white"><%= listing.title %></h5>
-        <p class="card-text text-light">
-          ₹<%= listing.price.toLocaleString("en-IN") %>/night
-          <i class="tax-info">&nbsp;&nbsp;+18% GST</i><br/>
-          <%= listing.country %>
-        </p>
       </div>
-
     </div>
+
+    <% } %>
   </div>
 
-  <% } %>
 </div>
- <script>
-  let taxswitch=document.getElementById("switchCheckDefault");
-  taxswitch.addEventListener("click",()=>{
-     let taxInfo=document.getElementsByClassName("tax-info");
-for(let i=0;i<taxInfo.length;i++){
-  if(taxInfo[i].style.display!=="inline"){
-    taxInfo[i].style.display="inline";
-  }
-  else{
-    taxInfo[i].style.display="none";
-  }
-}
-  })
-</script>
-<script>
-  // category filter
-  const filters = document.querySelectorAll(".filter");
 
-  filters.forEach(filter => {
-    filter.addEventListener("click", () => {
-      const category = filter.getAttribute("data-category");
-      window.location.href = `/listings?category=${encodeURIComponent(category)}`;
-    });
+<script>
+document.querySelectorAll(".filter").forEach(filter=>{
+  filter.addEventListener("click",()=>{
+    const category = filter.getAttribute("data-category");
+    window.location.href = `/listings?category=${encodeURIComponent(category)}`;
   });
-</script>
+});
 
-<script>
-document.querySelectorAll(".wishlist-btn").forEach(button => {
-
-  button.addEventListener("click", async (e) => {
-
+document.querySelectorAll(".wishlist-btn").forEach(button=>{
+  button.addEventListener("click", async (e)=>{
     e.preventDefault();
     e.stopPropagation();
 
-    const listingId = button.dataset.id;
+    const id = button.dataset.id;
     const icon = button.querySelector("i");
-    const currentlyWishlisted = icon.classList.contains("fa-solid");
+    const active = icon.classList.contains("fa-solid");
 
-    console.log("Clicked:", listingId);
-    console.log("Currently wishlisted:", currentlyWishlisted);
+    const res = await fetch(`/wishlist/${id}`, {
+      method: active ? "DELETE" : "POST"
+    });
 
-    try {
-      const response = await fetch(`/wishlist/${listingId}`, {
-        method: currentlyWishlisted ? "DELETE" : "POST"
-      });
+    const data = await res.json();
 
-      console.log("Response status:", response.status);
-
-      const data = await response.json();
-      console.log("Response data:", data);
-
-      if (data.success) {
-
-        if (currentlyWishlisted) {
-          icon.classList.remove("fa-solid");
-          icon.classList.add("fa-regular");
-        } else {
-          icon.classList.remove("fa-regular");
-          icon.classList.add("fa-solid");
-        }
-
-      }
-
-    } catch (err) {
-      console.log("ERROR:", err);
+    if(data.success){
+      icon.classList.toggle("fa-solid");
+      icon.classList.toggle("fa-regular");
     }
-
   });
-
 });
 </script>
