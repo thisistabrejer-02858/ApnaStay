@@ -11,12 +11,12 @@ const userController=require('../controllers/user.js');
 const review = require('../models/review.js');
 
 
-// ================= SIGNUP =================
+// signup
 router.route("/signup")
   .get(userController.renderSignup)
   .post(wrapAsync(userController.signup));
 
-// ================= LOGIN =================
+//  LOGIN 
 router.route("/login")
   .get(userController.renderlogin)
   .post(
@@ -31,12 +31,12 @@ router.route("/login")
  router.get("/profile", isloggedIn, async (req, res) => {
 
   const user = await User.findById(req.user._id)
-    .populate("wishlist");   // ✅ only this
+    .populate("wishlist");   
 
   res.render("users/profile", { user });
 
 });
-  // ================= GOOGLE LOGIN =================
+  //  GOOGLE LOGIN 
 
 // Step 1: Redirect to Google
 router.get("/auth/google",
@@ -51,11 +51,11 @@ router.get("/auth/google/callback",
   }),
   (req, res) => {
     req.flash("success", "Welcome back to ApnaStay!");
-    res.redirect("/listings");
+    return res.redirect("/listings");
   }
 );
 
-// ================= WISHLIST =================
+// wishlist
 
 router.post("/wishlist/:id", isloggedIn, async (req, res) => {
   const { id } = req.params;
@@ -79,9 +79,9 @@ router.post("/wishlist/:id", isloggedIn, async (req, res) => {
 
 
 // Show profile
-router.get("/profile", isloggedIn, (req, res) => {
-    res.render("users/profile");
-});
+// router.get("/profile", isloggedIn, (req, res) => {
+//     res.render("users/profile");
+// });
 
 // Show edit page
 router.get("/profile/edit", isloggedIn, (req, res) => {

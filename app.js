@@ -133,7 +133,7 @@ res.status(statusCode).render('error.ejs',{err});
 });
 app.use((err, req, res, next) => {
   if (err.code === "LIMIT_FILE_SIZE") {
-    req.flash("error", "File too large! Max 2MB allowed.");
+    req.flash("error", "File too large! Max 5MB allowed.");
     return res.redirect("back");
   }
   next(err);
