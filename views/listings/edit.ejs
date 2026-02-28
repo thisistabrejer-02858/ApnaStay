@@ -117,7 +117,7 @@
 <script>
   const imageInput = document.getElementById("imageInput");
   const fileError = document.getElementById("fileError");
-  const maxSize = 2 * 1024 * 1024; // 2MB
+  const maxSize = 5 * 1024 * 1024; // 5MB
 
   imageInput.addEventListener("change", function () {
     const file = this.files[0];
@@ -125,7 +125,7 @@
     if (!file) return; // If no file selected, do nothing
 
     if (file.size > maxSize) {
-      fileError.textContent = "File must be less than 2MB!";
+      fileError.textContent = "File must be less than 5MB!";
       imageInput.classList.add("is-invalid");
       this.value = ""; // remove large file
     } else {
